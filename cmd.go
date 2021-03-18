@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/xml"
 	"errors"
-	"fmt"
 	"os"
 )
 
@@ -138,12 +137,11 @@ func createXML(csvFileName string) ([]byte, error) {
 
 	out, err := xml.MarshalIndent(cfg2, " ", "  ")
 
-	fmt.Println(string(out))
 	return out, err
 }
 
 func writeXML(xmlFileName string, xmlData []byte) error {
-	f, err := os.OpenFile(xmlFileName, os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile(xmlFileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	checkErr(err, xmlWriteErr)
 	defer f.Close()
 
