@@ -5,6 +5,8 @@ import (
 	"encoding/xml"
 	"errors"
 	"os"
+
+	cli "github.com/urfave/cli/v2"
 )
 
 var (
@@ -150,6 +152,8 @@ func writeXML(xmlFileName string, xmlData []byte) error {
 }
 
 func main() {
+	(&cli.App{}).Run(os.Args)
+
 	if len(os.Args) == 1 || len(os.Args[1:]) > 2 {
 		panic(errArgsCnt)
 	}

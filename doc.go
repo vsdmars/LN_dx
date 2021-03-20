@@ -20,4 +20,11 @@ generated cfg2 xml format as follows:
 	   </configuration-source>
 	 </application>
 
+
+Todo:
+1. CLI
+2. input can indicates property type
+name|value|data
+name|type|data
+
 */
