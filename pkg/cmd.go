@@ -6,6 +6,11 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+const (
+	multiProduct = "multiproduct"
+	action       = "action"
+)
+
 func newAuthors() []*cli.Author {
 	return []*cli.Author{
 		{Name: "shchang", Email: "shchang@linkedin.com"},
@@ -15,11 +20,13 @@ func newAuthors() []*cli.Author {
 func newFlags() []cli.Flag {
 	flags := []cli.Flag(nil)
 	flags = append(flags, &cli.StringFlag{
-		Name:     "p",
+		Name:     multiProduct,
+		Aliases:  []string{"p"},
 		Usage:    "`multiproduct` name",
 		Required: true,
 	}, &cli.StringFlag{
-		Name:     "a",
+		Name:     action,
+		Aliases:  []string{"a"},
 		Usage:    "`action` type",
 		Required: true,
 	})
@@ -27,6 +34,13 @@ func newFlags() []cli.Flag {
 	return flags
 }
 
+func extractFlag(ctx *cli.Context) (m string, a string) {
+	m = ctx.String(multiProduct)
+	a = ctx.String(action)
+	return
+}
+
+// Cmd is the entry point for program dx
 func Cmd() error {
 	app := cli.NewApp()
 	app.Name = "dx"
@@ -46,9 +60,8 @@ e.g dx -p multiproduct -a action input_file output_file`
 	app.Flags = newFlags()
 
 	app.Action = func(ctx *cli.Context) error {
-		mp := ctx.String("p")
-		action := ctx.String("a")
-		return dispatch(mp, action)
+		mp, action := extractFlag(ctx)
+		return dispatch(mp, action, ctx.Args())
 	}
 
 	return app.Run(os.Args)
