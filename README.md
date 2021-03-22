@@ -7,7 +7,9 @@
 $ dx -h
 
 mp: plag-telemetry action: ponf
+
 generates plat-telemetry cfg2 for ponf
+
 $ dx -p plat-telemetry -a ponf data.txt output.xml
 
 ## input csv format
